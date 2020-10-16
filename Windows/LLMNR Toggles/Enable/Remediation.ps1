@@ -1,3 +1,4 @@
+#############################################
 $regPath = "HKLM:\SOFTWARE\policies\Microsoft\Windows NT\DNSClient"
 $regProperty = "EnableMulticast"
 $desiredValue = '1'
