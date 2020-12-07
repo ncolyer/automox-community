@@ -90,7 +90,7 @@ Function Get-InstalledSoftware {
   .NOTES
   This function is courtesy of stackoverflow community as a superior alternative to WMI/Win32_Product
 
-  .LINKS
+  .LINK
   https://stackoverflow.com/questions/25268491/alternative-to-win32-product 
 
   #>
