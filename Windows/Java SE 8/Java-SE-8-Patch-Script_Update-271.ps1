@@ -104,8 +104,10 @@ Function Get-InstalledSoftware {
   )
 
   Process {
+    
     foreach ($Computer in $ComputerName)
     {
+      
       #Open Remote Base
       $reg=[microsoft.win32.registrykey]::OpenRemoteBaseKey('LocalMachine',$Computer)
 
@@ -116,49 +118,71 @@ Function Get-InstalledSoftware {
 
       #Get all of they keys into a list
       $softwareKeys = @()
+      
       if ($is64){
-        $pathUninstall64 = "SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall"
+        
+	$pathUninstall64 = "SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall"
         $keyUninstall64 = $reg.OpenSubKey($pathUninstall64)
         $keyUninstall64.GetSubKeyNames() | % {
-          $softwareKeys += $pathUninstall64 + "\\" + $_
-        }
-        $keyUninstall64.Close()
+        
+	  $softwareKeys += $pathUninstall64 + "\\" + $_
+        
+	}
+        
+	$keyUninstall64.Close()
+      
       }
       
       $pathUninstall32 = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall"
       $keyUninstall32 = $reg.OpenSubKey($pathUninstall32)
       $keyUninstall32.GetSubKeyNames() | % {
+      
         $softwareKeys += $pathUninstall32 + "\\" + $_
+      
       }
       
       $keyUninstall32.Close()
 
       #Get information from all the keys
       $softwareKeys | % {
-        $subkey=$reg.OpenSubKey($_)
-          if ($subkey.GetValue("DisplayName")){
-            $installDate = $null
-              if ($subkey.GetValue("InstallDate") -match "/"){
-                $installDate = Get-Date $subkey.GetValue("InstallDate")
-              }
-              elseif ($subkey.GetValue("InstallDate").length -eq 8){
-                  $installDate = Get-Date $subkey.GetValue("InstallDate").Insert(6,".").Insert(4,".")
-              }
-              New-Object PSObject -Property @{
-                ComputerName = $Computer
-                Name = $subkey.GetValue("DisplayName")
-                Version = $subKey.GetValue("DisplayVersion")
-                Vendor = $subkey.GetValue("Publisher")
-                UninstallString = $subkey.GetValue("UninstallString")
-                InstallDate = $installDate
-              }
-          }
+        
+	$subkey=$reg.OpenSubKey($_)
+        
+	  if ($subkey.GetValue("DisplayName")){
+            
+	    $installDate = $null
+            
+	    if ($subkey.GetValue("InstallDate") -match "/"){
+            
+	      $installDate = Get-Date $subkey.GetValue("InstallDate")
+            
+	    }
+            elseif ($subkey.GetValue("InstallDate").length -eq 8){
+            
+	      $installDate = Get-Date $subkey.GetValue("InstallDate").Insert(6,".").Insert(4,".")
+            }
+            
+	    New-Object PSObject -Property @{
+              ComputerName = $Computer
+              Name = $subkey.GetValue("DisplayName")
+              Version = $subKey.GetValue("DisplayVersion")
+              Vendor = $subkey.GetValue("Publisher")
+              UninstallString = $subkey.GetValue("UninstallString")
+              InstallDate = $installDate
+            }
+          
+	  }
 
           $subkey.Close()
+      
       }
+      
       $reg.Close()
+    
     }
+
   }
+
 }
 
 
