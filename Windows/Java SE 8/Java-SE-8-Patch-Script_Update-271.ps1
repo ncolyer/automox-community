@@ -43,8 +43,6 @@ Defaults are set but parameter override is available if custom-paramters are req
   Purpose/Change: Initial script development
   Email:          nicholas.colyer@automox.com, contact@nicholascolyer.com
   Url:            https://github.com/ncolyer/automox-community
-
-.METADATA
   Platform:       Microsoft Windows
   Release:        10
   Build:          >=1507
