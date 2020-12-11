@@ -30,7 +30,6 @@ Java SE Runtime Environment 8 Update (271) Script (Java-SE-8-Patch-Script_Update
 
 .DESCRIPTION
 This script will update the java version installed with the patch manually uploaded to the Automox Console.
-Defaults are set but parameter override is available if custom-paramters are required.
 
 .OUTPUTS
   Exit 0
@@ -54,7 +53,6 @@ Defaults are set but parameter override is available if custom-paramters are req
 #>
 
 #-----------------------------------------------------------[Parameters]-----------------------------------------------------------
-#region parameters
 
 Param (
 
@@ -67,9 +65,7 @@ Param (
 
 )
 
-#endregion
 #-----------------------------------------------------------[Functions]------------------------------------------------------------
-#region functions
 
 Function Get-InstalledSoftware {
   <#
@@ -319,9 +315,7 @@ function Invoke-PatchNow ($compliantPatchFile, $pathFilter) {
 
 }
 
-#endregion
 #-----------------------------------------------------------[Execution]------------------------------------------------------------
-#region execution
 
 Try {
 
@@ -333,5 +327,3 @@ Try {
   exit 1
 
 }
-
-#endregion
