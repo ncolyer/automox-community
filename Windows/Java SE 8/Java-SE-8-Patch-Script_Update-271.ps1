@@ -296,7 +296,7 @@ function Invoke-PatchNow ($compliantPatchFile, $pathFilter) {
 
   #>
 
-  if ((Get-CompliantStatus $compliantProductValue $productFilter $compliantTestCmd $compliantTestCmdValue) -eq $false){
+  if ((Get-CompliantStatus $productFilter $compliantProductValue $compliantTestCmd $compliantTestCmdValue) -eq $false){
 
     # Terminate Any Potential File/Locking Processes
     (Get-WmiObject -Class win32_process -Filter "ExecutablePath like '%$pathFilter%'") | ForEach-Object {($_.terminate())}
